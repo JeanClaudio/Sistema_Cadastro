@@ -1,8 +1,8 @@
 <?php
 
-$servidor = "191.252.120.37";
-$usuario = "teste";
-$senha = "teste123";
+$servidor = "localhost";
+$usuario = "root";
+$senha = "";
 $dbname = "correios1";
 
 //Criar conexão
