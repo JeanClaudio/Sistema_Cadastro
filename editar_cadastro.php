@@ -1,5 +1,10 @@
 <?php
     session_start();
+    include_once('conexao.php');
+    $id = filter_input(INPUT_GET, 'id',FILTER_SANITIZE_NUMBER_INT);
+    $result_usuario = "SELECT * FROM tbtestcadastro WHERE id ='$id'";
+    $resulto_usuario = mysqli_query($conn,$result_usuario);
+    $row_usuario = mysqli_fetch_assoc($resulto_usuario);
 ?>
 
 <!doctype html>
@@ -14,11 +19,11 @@
 
     <script src="sweetalert.js"></script>
 
-    <title>Tela Cadastro</title>
+    <title>Editar Cadastro</title>
   </head>
   <body>
     <header class="justify-content-center text-center bg-primary text-light p-2">
-        <h1>Tela de Cadastro</h1>
+        <h1>Editar Cadastro</h1>
     </header>
 
     <!----------------------------------Container_Formulário/Início---------------------------->
@@ -34,27 +39,29 @@
             ?>
 
             <!----------------------------------Formulário_Início---------------------------->
-            <form method="POST" action="processa.php" class="pt-5">
+            <form method="POST" action="proc_edit_usuario.php" class="pt-5">
                 <div class="form-row">
                 <h2 class="container-fluid">Informações p/ cadastro</h2>
                 
                     <!----------------------------------Dados_pessoais---------------------------->
+                    <input type="hidden" name="id" value="<?php echo $row_usuario['id'];?>">
+
                     <div class="form-group col-sm-6">
                         <label for="inputNome">Seu nome</label>
-                        <input type="text" name="nome" class="form-control" id="inputNome" placeholder="Digite seu nome">
+                        <input type="text" name="nome" class="form-control" id="inputNome" placeholder="Digite seu nome" value="<?php echo $row_usuario['nome'];?>">
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="inputNomeempresa">Nome da empresa</label>
-                        <input type="text" name="nome_empresa" class="form-control" id="inputNomeempresa" placeholder="Digite o nome da empresa">
+                        <input type="text" name="nome_empresa" class="form-control" id="inputNomeempresa" placeholder="Digite o nome da empresa" value="<?php echo $row_usuario['nome_empresa'];?>">
                     </div> 
                     <div class="form-group col-sm-6">
                         <label for="inputDest">Destinatário</label>
-                        <input type="text" name="destinatario" class="form-control" id="inputDest" placeholder="Digite seu nome">
+                        <input type="text" name="destinatario" class="form-control" id="inputDest" placeholder="Digite seu nome" value="<?php echo $row_usuario['destinatario'];?>">
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="inputTip">Tipo</label>
-                        <select id="inputTip" name="tipo" class="form-control">
-                            <option>Escolha...</option>
+                        <select id="inputTip" name="tipo" class="form-control" >
+                            <option><?php echo $row_usuario['tipo'];?></option>
                             <option>Carta Comum</option>
                             <option>Carta Registrada</option>
                             <option>Pac</option>
@@ -67,28 +74,28 @@
 
                     <div class="form-group col-sm-10">
                         <label for="inputLogr">Logradouro</label>
-                        <input type="text" name="logradouro" class="form-control" id="inputLogr" placeholder="Endereço completo">                        
+                        <input type="text" name="logradouro" class="form-control" id="inputLogr" placeholder="Endereço completo" value="<?php echo $row_usuario['logradouro'];?>">                        
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="inputNume">Número</label>
-                        <input type="text" name="numero" class="form-control" id="inputNume" placeholder="N° Casa">                        
+                        <input type="text" name="numero" class="form-control" id="inputNume" placeholder="N° Casa" value="<?php echo $row_usuario['num_casa'];?>">                        
                     </div>
                     <div class="form-group col-sm-4">
                         <label for="inputComp">Complemento</label>
-                        <input type="text" name="complemento" class="form-control" id="inputComp" placeholder="Complemento">                        
+                        <input type="text" name="complemento" class="form-control" id="inputComp" placeholder="Complemento" value="<?php echo $row_usuario['complemento'];?>">                        
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="inputCep">Cep</label>
-                        <input type="text" name="cep" class="form-control" id="inputCep" placeholder="Endereço completo">                        
+                        <input type="text" name="cep" class="form-control" id="inputCep" placeholder="Endereço completo" value="<?php echo $row_usuario['cep'];?>">                        
                     </div>
                     <div class="form-group col-sm-3">
                         <label for="inputCid">Cidade</label>
-                        <input type="text" name="cidade" class="form-control" id="inputCid" placeholder="Cidade">                        
+                        <input type="text" name="cidade" class="form-control" id="inputCid" placeholder="Cidade" value="<?php echo $row_usuario['cidade'];?>">                        
                     </div>
                     <div class="form-group col-sm-2">
                         <label for="inputEst">Estado</label>
                         <select id="inputEst" name="estado" class="form-control">
-                            <option>Escolha...</option>
+                            <option><?php echo $row_usuario['estado'];?></option>
                             <option>AC</option>
                             <option>AL</option>
                             <option>AP</option>
@@ -120,9 +127,9 @@
                     </div>
                     <div class="form-group col-sm-12">
                         <label for="exampleFormControlTextarea1">Informações adicionais</label>
-                        <textarea class="form-control" name="inf_adicionais" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea class="form-control" name="inf_adicionais" id="exampleFormControlTextarea1" rows="3" ><?php echo $row_usuario['info_adic'];?></textarea>
                     </div>
-                    <input type="submit" class="btn btn-primary" value="Cadastrar">
+                    <input type="submit" class="btn btn-primary" value="Editar">
 
                 </div>
             </form>
